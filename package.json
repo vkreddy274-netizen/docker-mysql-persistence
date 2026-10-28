@@ -1,0 +1,14 @@
+{
+  "name": "mysql-volume-persistence-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A student records website demonstrating MySQL Docker volume persistence",
+  "scripts": {
+    "start": "node server.js",
+    "verify:persistence": "node scripts/verify-persistence.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "mysql2": "^3.14.1"
+  }
+}

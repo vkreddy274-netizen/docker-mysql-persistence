@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#101a2d">
+    <title>Classroom | MySQL Persistence Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Classroom home">
+          <span class="brand-mark" aria-hidden="true">C</span>
+          <span>classroom<span class="brand-dot">.</span></span>
+        </a>
+        <div class="lab-label"><span class="live-dot"></span> DOCKER LAB <span class="label-divider">/</span> 01</div>
+        <a class="github-link" href="https://docs.docker.com/engine/storage/volumes/" target="_blank" rel="noreferrer">Volume docs <span aria-hidden="true">↗</span></a>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span>01</span> &nbsp; DATA PERSISTENCE</p>
+            <h1>Containers come<br>and go. <span>Your data<br>shouldn’t.</span></h1>
+            <p class="hero-description">A database container is replaceable. A Docker volume gives your student records a home that lasts beyond the container.</p>
+            <a class="text-link" href="#persistence">See how persistence works <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="volume-visual" aria-label="MySQL container connected to persistent Docker volume">
+            <div class="visual-caption">THE PERSISTENCE MODEL</div>
+            <div class="diagram">
+              <div class="container-box">
+                <div class="container-head"><span class="mysql-glyph">✳</span><span>MYSQL CONTAINER</span></div>
+                <div class="container-body">
+                  <span class="database-icon" aria-hidden="true">▤</span>
+                  <span>student records</span>
+                  <span class="container-status"><i></i> RUNNING</span>
+                </div>
+                <div class="mount-label"><span>/var/lib/mysql</span><span class="mount-arrow">↕</span></div>
+              </div>
+              <div class="volume-box">
+                <div class="volume-icon" aria-hidden="true"><span></span><span></span><span></span></div>
+                <div><strong>mysql_data</strong><small>DOCKER NAMED VOLUME</small></div>
+                <span class="volume-check" aria-label="Persistent">✓</span>
+              </div>
+            </div>
+            <div class="visual-foot"><span>CONTAINER LIFECYCLE</span><span>DATA LIFECYCLE</span></div>
+          </div>
+        </section>
+
+        <section class="proof-strip" id="persistence">
+          <div class="proof-icon" aria-hidden="true">↻</div>
+          <div class="proof-copy"><strong>Remove the container. Keep the records.</strong><span>Recreate MySQL with the same named volume and your rows are right where you left them.</span></div>
+          <div class="mount-code"><span>mysql_data</span><span class="code-arrow">→</span><code>/var/lib/mysql</code></div>
+        </section>
+
+        <section class="workspace">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">LIVE DATABASE</p>
+              <h2>Student records <span id="record-count" class="count-pill">—</span></h2>
+            </div>
+            <div class="connection"><span id="connection-dot" class="connection-dot"></span><span id="connection-label">Checking connection</span></div>
+          </div>
+          <div class="content-grid">
+            <div class="records-panel">
+              <div class="table-wrap">
+                <table>
+                  <thead><tr><th>STUDENT</th><th>EMAIL</th><th>COURSE</th><th>RECORD ID</th></tr></thead>
+                  <tbody id="student-rows"><tr><td class="table-message" colspan="4">Loading student records…</td></tr></tbody>
+                </table>
+              </div>
+              <div class="table-footer"><span><span class="storage-dot"></span> Stored in MySQL</span><button id="refresh-button" class="refresh-button" type="button">↻ &nbsp; Refresh records</button></div>
+            </div>
+            <aside class="add-panel">
+              <div class="panel-top"><span class="panel-icon" aria-hidden="true">＋</span><span class="eyebrow">DATABASE ACTION</span></div>
+              <h3>Add a student</h3>
+              <p>Create a record, then follow the persistence check below to prove it survives container removal.</p>
+              <form id="student-form">
+                <label for="student-name">FULL NAME</label>
+                <input id="student-name" name="name" maxlength="100" placeholder="e.g. Taylor Morgan" required>
+                <label for="student-email">EMAIL ADDRESS</label>
+                <input id="student-email" name="email" type="email" maxlength="254" placeholder="taylor@example.edu" required>
+                <label for="student-course">COURSE</label>
+                <input id="student-course" name="course" maxlength="120" placeholder="e.g. Data Science" required>
+                <button class="submit-button" type="submit">Save student <span aria-hidden="true">→</span></button>
+                <p id="form-message" class="form-message" role="status" aria-live="polite"></p>
+              </form>
+            </aside>
+          </div>
+        </section>
+
+        <section class="steps-section">
+          <div class="steps-intro">
+            <p class="eyebrow"><span>02</span> &nbsp; PROVE IT YOURSELF</p>
+            <h2>A three-step<br>persistence check.</h2>
+            <p>Use a record you add above. The volume stays when a container is removed—unless you explicitly delete the volume too.</p>
+            <a class="text-link" href="https://docs.docker.com/reference/cli/docker/compose/rm/" target="_blank" rel="noreferrer">How compose rm works <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="step-list">
+            <article class="step">
+              <span class="step-number">01</span>
+              <div><h3>Create a record</h3><p>Add a student above, then note their name in the list.</p></div>
+              <span class="step-mark">✓</span>
+            </article>
+            <article class="step">
+              <span class="step-number">02</span>
+              <div><h3>Remove only MySQL’s container</h3><p>Run this from the project directory. It does not remove the <code>mysql_data</code> named volume.</p><pre><code>docker compose rm -sf mysql</code></pre></div>
+              <span class="step-mark">↗</span>
+            </article>
+            <article class="step">
+              <span class="step-number">03</span>
+              <div><h3>Recreate and verify</h3><p>Start MySQL again, wait until healthy, then refresh this page.</p><pre><code>docker compose up -d mysql</code></pre></div>
+              <span class="step-mark">✓</span>
+            </article>
+          </div>
+        </section>
+      </main>
+      <footer><span class="brand footer-brand"><span class="brand-mark" aria-hidden="true">C</span> classroom<span class="brand-dot">.</span></span><span>Built to learn what survives a container.</span><span class="footer-volume">PERSISTENT BY DESIGN <i>●</i></span></footer>
+    </div>
+  </body>
+</html>
